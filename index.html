@@ -536,17 +536,21 @@ td.dome{background:#FFFBF0}
 
   <div class="card">
     <h3>선생님께 제출하기</h3>
-    <p class="hint">이름과 번호를 적고 제출하면 선생님 화면에서 바로 확인할 수 있습니다.</p>
+    <p class="hint">반·번호·이름을 먼저 적으세요. 제출한 뒤에도 다시 들어와 <b>이어쓰기</b>를 누르면 내가 쓴 내용이 그대로 살아납니다.</p>
     <div class="idrow">
       <div><label class="q" for="sClass" style="margin-top:0">반</label><input type="text" id="sClass" placeholder="예) 6-3"></div>
       <div><label class="q" for="sNo" style="margin-top:0">번호</label><input type="text" id="sNo" placeholder="예) 12"></div>
       <div><label class="q" for="sName" style="margin-top:0">이름</label><input type="text" id="sName" placeholder="예) 김OO"></div>
     </div>
     <div class="actions">
+      <button class="btn ghost" id="loadMine">내가 쓴 내용 이어쓰기</button>
+      <button class="btn ghost" id="saveDraft">임시저장</button>
       <button class="btn primary" id="submitBtn">제출하기</button>
-      <button class="btn ghost" id="dl">활동지 내려받기 (.txt)</button>
-      <button class="btn ghost" id="cp">전체 복사</button>
-      <button class="btn ghost" onclick="window.print()">인쇄 / PDF</button>
+    </div>
+    <div class="actions" style="margin-top:8px">
+      <button class="btn ghost sm" id="dl">활동지 내려받기 (.txt)</button>
+      <button class="btn ghost sm" id="cp">전체 복사</button>
+      <button class="btn ghost sm" onclick="window.print()">인쇄 / PDF</button>
     </div>
     <div class="state" id="netState"><span class="dot"></span>연결 상태를 확인하는 중…</div>
   </div>
@@ -560,6 +564,9 @@ td.dome{background:#FFFBF0}
   <div class="obar">
     <b>교사용 대시보드</b>
     <span class="sp"></span>
+    <span id="whoami" style="font-size:12px;font-family:var(--mono);color:#B9CBDE"></span>
+    <button class="btn ghost sm" id="gLogin">구글 로그인</button>
+    <button class="btn ghost sm" id="gLogout" hidden>로그아웃</button>
     <button class="btn ghost sm" id="reload">새로고침</button>
     <button class="btn ghost sm" id="csv">CSV 내려받기</button>
     <button class="btn warm sm" id="tClose">닫기</button>
@@ -646,13 +653,6 @@ td.dome{background:#FFFBF0}
         <li>아래 코드의 자리에 값을 붙여넣고 저장</li>
       </ol>
       <pre>const FIREBASE_CONFIG = {
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
   apiKey: "AIzaSyAHd64FSeXU4b4UOD99n0ynwzaRNckjyqM",
   authDomain: "dome-writing.firebaseapp.com",
   projectId: "dome-writing",
@@ -660,20 +660,46 @@ const firebaseConfig = {
   messagingSenderId: "141495235514",
   appId: "1:141495235514:web:be829400d073ab5dda6383"
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
 const CLASS_CODE = "cheonan-dome-2026";   // 학급 구분용, 반마다 다르게</pre>
-      <p><b>Firestore 규칙</b> — 수업 기간에만 열어 두고 끝나면 <code>false</code>로 닫아 주세요.</p>
+      <p><b>Firestore 규칙</b> — 콘솔 → Firestore Database → 규칙 탭에 아래를 붙여넣고 <b>게시</b>하세요. 기본값 그대로 두면 안 됩니다.</p>
       <pre>rules_version = '2';
 service cloud.firestore {
-  match /databases/{db}/documents {
+  match /databases/{database}/documents {
+
+    function teacher() {
+      return request.auth != null
+        &amp;&amp; request.auth.token.email in ['여기에@본인gmail주소.com'];
+    }
+    function open() {
+      return request.time &lt; timestamp.date(2026, 9, 5);
+    }
+
     match /dome_submissions/{doc} {
-      allow read, write: if request.time &lt; timestamp.date(2026, 12, 31);
+      // 학생은 자기 문서 1건만 열어볼 수 있음 (이어쓰기)
+      allow get: if request.auth != null &amp;&amp; open();
+
+      // 전체 목록 조회는 교사만
+      allow list: if teacher();
+
+      // 제출·임시저장
+      allow create, update: if request.auth != null &amp;&amp; open()
+        &amp;&amp; request.resource.data.code == 'cheonan-dome-2026'
+        &amp;&amp; request.resource.data.studentName is string
+        &amp;&amp; request.resource.data.studentName.size() &lt; 20;
+
+      allow delete: if teacher();
     }
   }
 }</pre>
-      <p style="color:var(--clay);font-size:13.5px"><b>안내</b> — 학생 이름이 저장되므로 학급 코드는 공개하지 마시고, 수업이 끝나면 컬렉션을 삭제하거나 규칙을 닫아 주세요.</p>
+      <p><b>인증 설정도 함께 켜세요</b> — 콘솔 → 빌드 → Authentication → 시작하기 →</p>
+      <ol>
+        <li><b>익명</b> 사용 설정 (학생용, 계정 없이 저장·이어쓰기)</li>
+        <li><b>Google</b> 사용 설정 (교사용 대시보드 로그인)</li>
+        <li>Authentication → 설정 → <b>승인된 도메인</b>에 배포 주소(<code>사용자명.github.io</code>) 추가</li>
+        <li>파일 위쪽 <code>TEACHER_EMAILS</code>와 규칙의 이메일을 <b>본인 구글 주소</b>로 똑같이 수정</li>
+      </ol>
+      <p style="font-size:13.5px"><b>이렇게 하면</b> — 학생은 로그인 없이 쓰고 저장하지만 <b>남의 답안 목록은 볼 수 없고</b>, 선생님만 구글 로그인 후 전체를 봅니다. 학생이 다시 들어와 반·번호·이름을 적고 '이어쓰기'를 누르면 본인 것만 불러옵니다.</p>
+      <p style="color:var(--clay);font-size:13.5px"><b>꼭 고칠 곳</b> — 규칙의 이메일 주소, 날짜 <code>2026, 9, 5</code>, 학급 코드 <code>'cheonan-dome-2026'</code> 세 가지. 학급 코드가 파일의 <code>CLASS_CODE</code>와 다르면 제출이 전부 거부됩니다.</p>
     </div>
     <div class="card">
       <h3>② AI (손글씨 OCR · 채점 도우미)</h3>
@@ -708,6 +734,8 @@ const FIREBASE_CONFIG = {
 };
 const CLASS_CODE = "cheonan-dome-2026";
 const COLLECTION = "dome_submissions";
+// 대시보드를 볼 수 있는 교사 구글 계정 (여러 명이면 쉼표로 추가)
+const TEACHER_EMAILS = ["여기에@본인gmail주소.com"];
 
 (function(){
 "use strict";
@@ -925,7 +953,7 @@ function payload(){
     wrap:[v('f1'),v('f2'),v('f3'),v('f4')].join(' / '), changed:v('changed'),
     selfCheck:$$('.chk input:checked').length,
     weatherWords:countWeather($('#pReason').value+' '+$('#ocrText').value),
-    score:null, feedback:'',
+    score:null, feedback:'', submitted:false, uid:'',
     createdAt:new Date().toISOString()
   };
 }
@@ -956,17 +984,34 @@ $('#cp').addEventListener('click',async()=>{
 });
 
 /* ═══ Firebase ═══ */
-let db=null, fs=null, localStore=[];
+let db=null, fs=null, auth=null, au=null, me=null, localStore=[];
 const hasCfg = !!FIREBASE_CONFIG.projectId;
+function docId(d){
+  return [CLASS_CODE,d.className,d.studentNo,d.studentName].join('__')
+    .replace(/[\/\\\.\#\$\[\]\s]/g,'').slice(0,180);
+}
+function isTeacher(){ return !!(me && me.email && TEACHER_EMAILS.includes(me.email)); }
 async function initFB(){
-  if(!hasCfg){ setState(false,'연습 모드 — 제출 내용은 이 기기에서만 보입니다.'); return; }
+  if(!hasCfg){ setState(false,'연습 모드 — 새로고침하면 사라집니다. 설정에서 Firebase를 연결하세요.'); return; }
   try{
     const {initializeApp}=await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js');
     fs=await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js');
-    db=fs.getFirestore(initializeApp(FIREBASE_CONFIG));
-    setState(true,'선생님 화면과 연결됨 · 학급 코드 '+CLASS_CODE);
+    au=await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js');
+    const app=initializeApp(FIREBASE_CONFIG);
+    db=fs.getFirestore(app);
+    auth=au.getAuth(app);
+    au.onAuthStateChanged(auth,u=>{
+      me=u;
+      $('#whoami').textContent = u && u.email ? u.email : '';
+      $('#gLogin').hidden = isTeacher();
+      $('#gLogout').hidden = !isTeacher();
+      if(u && !u.email){ setState(true,'저장됨 · 학급 코드 '+CLASS_CODE); }
+      if(isTeacher()) load();
+    });
+    if(!auth.currentUser) await au.signInAnonymously(auth);
+    setState(true,'저장됨 · 학급 코드 '+CLASS_CODE);
   }catch(e){
-    db=null; setState(false,'연결 실패 — 연습 모드로 동작합니다.');
+    db=null; setState(false,'연결 실패 — 연습 모드로 동작합니다. ('+e.message+')');
   }
 }
 function setState(on,msg){
@@ -974,20 +1019,76 @@ function setState(on,msg){
 }
 initFB();
 
-$('#submitBtn').addEventListener('click',async()=>{
+async function saveDoc(submitted){
   const d=payload();
-  if(!d.studentName||!d.studentNo){ toast('번호와 이름을 적어 주세요.'); return; }
-  if(!d.pReason && !d.ocrText){ toast('제안서 근거가 비어 있어요.'); return; }
-  const btn=$('#submitBtn'); btn.disabled=true; btn.innerHTML='<span class="spin"></span>제출 중…';
-  try{
-    if(db){ await fs.addDoc(fs.collection(db,COLLECTION),d); }
-    else{ localStore.push({id:'local'+localStore.length,...d}); }
-    toast('제출했어요. 수고했습니다! 👏');
-    btn.innerHTML='제출 완료 ✓';
-  }catch(e){
-    toast('제출에 실패했어요. 활동지를 내려받아 선생님께 보여 주세요.');
-    btn.disabled=false; btn.innerHTML='제출하기';
+  if(!d.studentName||!d.studentNo||!d.className){ toast('반·번호·이름을 모두 적어 주세요.'); return false; }
+  if(submitted && !d.pReason && !d.ocrText){ toast('제안서 근거가 비어 있어요.'); return false; }
+  d.submitted=submitted;
+  d.updatedAt=new Date().toISOString();
+  d.uid=me?me.uid:'';
+  if(db){
+    const ref=fs.doc(db,COLLECTION,docId(d));
+    const prev=await fs.getDoc(ref).catch(()=>null);
+    if(prev && prev.exists()){
+      const p=prev.data();
+      d.score=p.score!=null?p.score:null;      // 선생님 채점은 보존
+      d.feedback=p.feedback||'';
+      d.createdAt=p.createdAt||d.createdAt;
+    }
+    await fs.setDoc(ref,d);
+  }else{
+    const i=localStore.findIndex(x=>x.id===docId(d));
+    if(i>=0) localStore[i]={id:docId(d),...d}; else localStore.push({id:docId(d),...d});
   }
+  return true;
+}
+function restore(d){
+  const set=(id,v)=>{ if($('#'+id)) $('#'+id).value=v||''; };
+  $$('#firstStance .pill').forEach(p=>p.setAttribute('aria-pressed',p.textContent===d.stance));
+  ['firstWhy','wonder','n1','n2','n3','n4','y1','y2','pTitle','pClaim','pReason','pCounter','pClose','ocrText','changed'].forEach(k=>set(k,d[k]));
+  set('y3t',d.y3);
+  const w=(d.wrap||'').split(' / ');
+  ['f1','f2','f3','f4'].forEach((k,i)=>set(k,w[i]));
+  if(d.photo){ $('#shot').src=d.photo; $('#shotWrap').style.display='block'; thumb=d.photo; }
+  const boxes=$$('.chk input');
+  boxes.forEach((b,i)=>b.checked = i < (d.selfCheck||0));
+  refreshCounters();
+}
+$('#loadMine').addEventListener('click',async()=>{
+  const d=payload();
+  if(!d.studentName||!d.studentNo||!d.className){ toast('반·번호·이름을 적어야 찾을 수 있어요.'); return; }
+  const btn=$('#loadMine'), old=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>찾는 중…';
+  try{
+    let found=null;
+    if(db){
+      const snap=await fs.getDoc(fs.doc(db,COLLECTION,docId(d)));
+      if(snap.exists()) found=snap.data();
+    }else{
+      found=localStore.find(x=>x.id===docId(d));
+    }
+    if(found){ restore(found); toast('내가 쓴 내용을 불러왔어요. 이어서 쓰세요.'); }
+    else toast('저장된 내용이 없어요. 반·번호·이름이 저번과 똑같은지 확인해 보세요.');
+  }catch(e){ toast('불러오기에 실패했어요. ('+e.message+')'); }
+  finally{ btn.disabled=false; btn.innerHTML=old; }
+});
+$('#saveDraft').addEventListener('click',async()=>{
+  const btn=$('#saveDraft'), old=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>저장 중…';
+  try{ if(await saveDoc(false)) toast('임시저장했어요. 다음에 이어쓰기로 불러올 수 있어요.'); }
+  catch(e){ toast('저장 실패 ('+e.message+')'); }
+  finally{ btn.disabled=false; btn.innerHTML=old; }
+});
+$('#submitBtn').addEventListener('click',async()=>{
+  const btn=$('#submitBtn'), old=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>제출 중…';
+  try{
+    if(await saveDoc(true)){ toast('제출했어요. 수고했습니다! 👏'); btn.innerHTML='제출 완료 ✓ (다시 눌러 수정 가능)'; }
+    else btn.innerHTML=old;
+  }catch(e){
+    toast('제출에 실패했어요. 활동지를 내려받아 선생님께 보여 주세요. ('+e.message+')');
+    btn.innerHTML=old;
+  }finally{ btn.disabled=false; }
 });
 
 /* ═══ 교사 대시보드 ═══ */
@@ -995,6 +1096,20 @@ let rows=[], sel=null;
 $('#tOpen').addEventListener('click',()=>{ $('#tPanel').hidden=false; load(); });
 $('#tClose').addEventListener('click',()=>$('#tPanel').hidden=true);
 $('#reload').addEventListener('click',load);
+$('#gLogin').addEventListener('click',async()=>{
+  if(!auth){ toast('먼저 Firebase를 연결하세요 (설정 탭).'); return; }
+  try{
+    const p=new au.GoogleAuthProvider();
+    await au.signInWithPopup(auth,p);
+    if(!isTeacher()){ toast('교사 계정이 아닙니다. 파일의 TEACHER_EMAILS에 이 주소를 넣어 주세요.'); return; }
+    toast('로그인했어요.'); load();
+  }catch(e){ toast('로그인 실패 ('+e.code||e.message+')'); }
+});
+$('#gLogout').addEventListener('click',async()=>{
+  await au.signOut(auth);
+  await au.signInAnonymously(auth);
+  rows=[]; renderList(); toast('로그아웃했어요.');
+});
 $$('.otab').forEach(t=>t.addEventListener('click',()=>{
   $$('.otab').forEach(x=>x.setAttribute('aria-selected',x===t));
   $$('[data-opanel]').forEach(p=>p.hidden=(p.dataset.opanel!==t.dataset.ot));
@@ -1011,11 +1126,15 @@ $('#saveKey').addEventListener('click',()=>{
 
 async function load(){
   if(db){
+    if(!isTeacher()){
+      $('#slist').innerHTML='<div style="padding:16px;font-size:14px;color:var(--ink-60)">위쪽 <b>구글 로그인</b>을 눌러 교사 계정으로 로그인하면 제출 목록이 보입니다.</div>';
+      rows=[]; return;
+    }
     try{
       const q=fs.query(fs.collection(db,COLLECTION),fs.where('code','==',CLASS_CODE));
       const snap=await fs.getDocs(q);
       rows=snap.docs.map(d=>({id:d.id,...d.data()}));
-    }catch(e){ toast('불러오기 실패 — Firestore 규칙을 확인하세요.'); rows=[]; }
+    }catch(e){ toast('불러오기 실패 — Firestore 규칙을 확인하세요. ('+e.message+')'); rows=[]; }
   }else{ rows=[...localStore]; }
   rows.sort((a,b)=>(a.studentNo||'').localeCompare(b.studentNo||'',undefined,{numeric:true}));
   renderList();
@@ -1035,7 +1154,7 @@ function renderList(){
     d.className='sitem'; d.setAttribute('aria-current',sel===r.id);
     const sc=(r.score!=null)?`<span class="sc">${r.score}점</span>`:'';
     d.innerHTML=`${sc}<b>${esc(r.studentNo||'')} ${esc(r.studentName||'')}</b>
-      <small>${esc(r.className||'')} · ${r.photo?'📷 손글씨 · ':''}자기점검 ${r.selfCheck||0}/4</small>`;
+      <small>${esc(r.className||'')} · ${r.submitted?'✅ 제출':'✏️ 임시저장'}${r.photo?' · 📷':''} · 자기점검 ${r.selfCheck||0}/4</small>`;
     d.addEventListener('click',()=>{sel=r.id;renderList();renderDetail(r);});
     el.appendChild(d);
   });
