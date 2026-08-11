@@ -1,0 +1,1149 @@
+<!-- 천안에 돔구장이 왜 필요할까? — 6학년 탐구 수업 사이트 v2
+     추가: 채점 루브릭 · 예시 답안 · 손글씨 사진 OCR · Firebase 제출 · 교사 대시보드 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>천안에 돔구장이 왜 필요할까?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Sans+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --night:#0F2540; --night-2:#1B3A5C; --lamp:#FFC64D; --turf:#1D7A52; --clay:#B4553C;
+  --paper:#F4F6F8; --card:#FFFFFF; --ink:#12233A; --ink-60:#516278; --line:#D8E0E8;
+  --shadow:0 1px 0 var(--line), 0 8px 24px rgba(15,37,64,.06);
+  --display:'Black Han Sans','Noto Sans KR',sans-serif;
+  --body:'Noto Sans KR',system-ui,sans-serif;
+  --mono:'Noto Sans Mono',ui-monospace,monospace; --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.7;-webkit-text-size-adjust:100%}
+h1,h2,h3{margin:0;font-weight:400}
+p{margin:0 0 .6em}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:2px;border-radius:6px}
+
+.hero{position:relative;background:var(--night);color:#fff;overflow:hidden;padding:34px 20px 0}
+.hero-sky{position:absolute;inset:0;width:100%;height:100%}
+.hero-inner{position:relative;max-width:940px;margin:0 auto;text-align:center;padding-bottom:56px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--lamp);text-transform:uppercase}
+.qmark{display:inline-block;margin:14px 0 6px;padding:5px 14px;border:1px solid rgba(255,198,77,.45);border-radius:999px;font-size:13px;color:#FFE3A6}
+.hero h1{font-family:var(--display);font-size:clamp(30px,6.4vw,58px);line-height:1.18;text-shadow:0 2px 30px rgba(0,0,0,.35)}
+.hero h1 em{font-style:normal;color:var(--lamp)}
+.hero-sub{margin-top:14px;color:#B9CBDE;font-size:15px}
+.drop{position:absolute;top:-30px;width:2px;height:16px;border-radius:2px;background:#8FB6DC;opacity:.55}
+@media (prefers-reduced-motion:no-preference){.drop{animation:fall linear infinite}}
+@keyframes fall{0%{transform:translateY(0);opacity:0}12%{opacity:.6}76%{opacity:.6}100%{transform:translateY(190px);opacity:0}}
+
+.rail{position:sticky;top:0;z-index:30;background:rgba(244,246,248,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.rail-in{max-width:940px;margin:0 auto;padding:8px 16px 10px;display:flex;align-items:center;gap:16px}
+.rail svg{flex:0 0 132px;height:44px;overflow:visible}
+.stagebtns{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+.stagebtn{flex:1;min-width:88px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 6px;cursor:pointer;text-align:center;transition:.18s}
+.stagebtn b{display:block;font-family:var(--display);font-size:16px;color:var(--ink)}
+.stagebtn span{display:block;font-family:var(--mono);font-size:10px;color:var(--ink-60);letter-spacing:.1em}
+.stagebtn:hover{border-color:var(--night-2)}
+.stagebtn[aria-current="true"]{background:var(--night);border-color:var(--night)}
+.stagebtn[aria-current="true"] b{color:#fff}
+.stagebtn[aria-current="true"] span{color:var(--lamp)}
+
+main{max-width:940px;margin:0 auto;padding:28px 16px 90px}
+.stage{animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.stage{animation:none}}
+.shead{display:flex;align-items:baseline;gap:12px;margin:26px 0 18px;border-bottom:2px solid var(--night);padding-bottom:10px}
+.shead b{font-family:var(--display);font-size:26px}
+.shead em{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--clay)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card>h3{font-family:var(--display);font-size:19px;margin-bottom:4px}
+.hint{color:var(--ink-60);font-size:13.5px;margin-bottom:14px}
+
+.news{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.news article{border:1px solid var(--line);border-radius:12px;padding:14px;background:#FBFCFD}
+.news .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;background:var(--night);color:var(--lamp);padding:3px 8px;border-radius:999px;margin-bottom:8px}
+.news h4{margin:0 0 6px;font-size:15px;font-weight:700;line-height:1.45}
+.news p{font-size:13.5px;color:var(--ink-60);margin:0}
+
+label.q{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+textarea,input[type=text],select{width:100%;font-family:var(--body);font-size:15px;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#FBFCFD;resize:vertical}
+textarea:focus,input[type=text]:focus{background:#fff;border-color:var(--night-2)}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-size:14px;cursor:pointer;transition:.15s}
+.pill[aria-pressed="true"]{background:var(--night);color:#fff;border-color:var(--night)}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{flex:1;min-width:120px;border:1px solid var(--line);background:#fff;border-radius:10px 10px 0 0;padding:10px 8px;cursor:pointer;text-align:left;border-bottom:3px solid var(--line)}
+.tab small{display:block;font-family:var(--mono);font-size:10px;color:var(--clay);letter-spacing:.1em}
+.tab b{font-size:14px;font-weight:700}
+.tab[aria-selected="true"]{border-bottom-color:var(--lamp);background:#FFFBF0}
+.panel[hidden]{display:none}
+.srcs{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--ink-60);font-family:var(--mono);line-height:1.7}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.stat{background:var(--night);color:#fff;border-radius:12px;padding:14px 16px}
+.stat .n{font-family:var(--display);font-size:32px;color:var(--lamp);line-height:1.1}
+.stat .n small{font-size:15px;color:#fff}
+.stat .l{font-size:12.5px;color:#B9CBDE;margin-top:4px}
+.chart{margin:16px 0}
+.chart h5{margin:0 0 8px;font-size:13px;font-weight:700;color:var(--ink-60)}
+.bar{display:grid;grid-template-columns:76px 1fr 62px;align-items:center;gap:10px;margin-bottom:7px;font-size:13.5px}
+.bar .track{background:#E9EEF3;border-radius:6px;height:22px;overflow:hidden}
+.bar .fill{display:block;height:100%;background:var(--turf);border-radius:6px;width:0;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.bar.alert .fill{background:var(--clay)}
+.bar .v{font-family:var(--mono);font-size:13px;text-align:right;font-weight:700}
+
+.tl{list-style:none;margin:14px 0 0;padding:0 0 0 22px;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 18px 14px}
+.tl li::before{content:"";position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--lamp);border:2px solid var(--night)}
+.tl time{font-family:var(--mono);font-size:11.5px;color:var(--clay);font-weight:700}
+.tl b{display:block;font-size:15px;margin:2px 0}
+.tl p{font-size:13.5px;color:var(--ink-60);margin:0}
+
+.tblwrap{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+thead th{background:var(--night);color:#fff;font-weight:700;font-size:13.5px}
+thead th:first-child{background:var(--night-2)}
+tbody th{background:#F0F4F8;font-weight:700;width:112px;font-size:13.5px}
+td.dome{background:#FFFBF0}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.box{border:1px solid var(--line);border-radius:12px;padding:14px}
+.box.good{border-top:4px solid var(--turf)}
+.box.care{border-top:4px solid var(--clay)}
+.box h4{margin:0 0 8px;font-family:var(--display);font-size:16px}
+.box ul{margin:0;padding-left:18px;font-size:13.5px}
+.box li{margin-bottom:7px}
+@media(max-width:640px){.twocol{grid-template-columns:1fr}}
+
+.y3{background:#EAF3EC;border-radius:24px;padding:18px;margin-top:8px}
+.y3 .ring{border-radius:20px;padding:16px}
+.y3 .r1{background:#D6E9DC}.y3 .r2{background:#EAF0E2}.y3 .r3{background:#FBF6DC}
+.ylab{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ylab i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.1em;background:var(--night);color:var(--lamp);padding:3px 8px;border-radius:999px}
+.ylab b{font-size:14.5px}
+.y3 textarea{background:rgba(255,255,255,.85);border-color:rgba(0,0,0,.08)}
+
+.proposal{border:2px solid var(--night);border-radius:var(--r);overflow:hidden;background:#fff}
+.proposal-h{background:var(--night);color:#fff;padding:14px 18px}
+.proposal-h b{font-family:var(--display);font-size:18px}
+.proposal-h span{display:block;font-size:12px;color:#B9CBDE;font-family:var(--mono)}
+.proposal-b{padding:18px}
+.count{font-family:var(--mono);font-size:11.5px;color:var(--ink-60);text-align:right;margin-top:4px}
+.fillsent{background:#FFFBF0;border:1px solid #F0E2BE;border-radius:12px;padding:16px;font-size:16px;line-height:2.4}
+.fillsent input[type=text]{display:inline-block;width:auto;min-width:150px;padding:4px 10px;border:none;border-bottom:2px solid var(--clay);border-radius:0;background:transparent;font-size:16px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
+.chk input{margin-top:5px;width:18px;height:18px;accent-color:var(--turf);flex:0 0 auto}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:none;border-radius:10px;padding:12px 20px;font-size:14.5px;font-weight:700;cursor:pointer;transition:.15s}
+.btn.primary{background:var(--night);color:#fff}
+.btn.primary:hover{background:var(--night-2)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--night)}
+.btn.warm{background:var(--clay);color:#fff}
+.btn.sm{padding:6px 13px;font-size:12.5px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--night);color:#fff;padding:12px 22px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:80;max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* GRASPS 수행과제 */
+.grasps{display:grid;gap:2px;margin-top:14px}
+.grasps .g{display:grid;grid-template-columns:112px 1fr;gap:14px;align-items:start;padding:11px 0;border-bottom:1px dashed var(--line)}
+.grasps .g:last-child{border-bottom:none}
+.grasps .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--clay);font-weight:700;line-height:1.4}
+.grasps .k b{display:block;font-family:var(--display);font-size:15px;color:var(--night);letter-spacing:0;margin-top:1px}
+.grasps .v{font-size:14.5px}
+.grasps .g.hi{background:#FFFBF0;border-radius:10px;padding:12px;border-bottom:none}
+@media(max-width:560px){.grasps .g{grid-template-columns:1fr;gap:3px}}
+
+/* 루브릭 */
+.rub table{min-width:600px;font-size:13.5px}
+.rub .sc{font-family:var(--mono);font-weight:700;text-align:center;width:66px;background:#FFFBF0}
+.rub tbody th{width:118px;background:#F0F4F8;font-size:13px}
+.badge{display:inline-block;font-family:var(--mono);font-size:11px;background:var(--turf);color:#fff;border-radius:999px;padding:2px 9px;margin-left:6px}
+
+/* 예시 답안 잠금 */
+.lock{border:1px dashed var(--line);border-radius:12px;padding:18px;text-align:center;color:var(--ink-60);font-size:14px;background:#FBFCFD}
+.samples article{border:1px solid var(--line);border-left:4px solid var(--lamp);border-radius:10px;padding:14px;margin-bottom:10px;background:#FFFDF7;font-size:14px}
+.samples b{display:block;font-family:var(--mono);font-size:11px;color:var(--clay);margin-bottom:6px}
+
+/* 업로드 */
+.drop-zone{border:2px dashed var(--line);border-radius:14px;padding:26px 16px;text-align:center;background:#FBFCFD;cursor:pointer;transition:.15s}
+.drop-zone:hover,.drop-zone.over{border-color:var(--lamp);background:#FFFBF0}
+.drop-zone .ic{font-size:30px;line-height:1}
+.drop-zone p{margin:8px 0 0;font-size:14px;color:var(--ink-60)}
+#shotWrap{display:none;margin-top:14px}
+#shot{max-width:100%;border-radius:12px;border:1px solid var(--line)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* 제출 */
+.idrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:600px){.idrow{grid-template-columns:1fr}}
+.state{font-size:12.5px;font-family:var(--mono);color:var(--ink-60);margin-top:10px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#C7D0DA;margin-right:6px;vertical-align:1px}
+.dot.on{background:var(--turf)}
+
+/* 교사 */
+.tbtn{position:fixed;right:16px;bottom:16px;z-index:50;border:none;background:var(--clay);color:#fff;border-radius:999px;padding:12px 18px;font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(180,85,60,.35)}
+.overlay{position:fixed;inset:0;background:var(--paper);z-index:70;overflow:auto;padding:0 0 80px}
+.overlay[hidden]{display:none}
+.obar{position:sticky;top:0;background:var(--night);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.obar b{font-family:var(--display);font-size:18px}
+.obar .sp{flex:1}
+.otabs{display:flex;gap:6px;padding:14px 16px 0;max-width:1080px;margin:0 auto;flex-wrap:wrap}
+.otab{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font-size:13.5px;cursor:pointer}
+.otab[aria-selected="true"]{background:var(--night);color:#fff;border-color:var(--night)}
+.owrap{max-width:1080px;margin:0 auto;padding:16px}
+.subgrid{display:grid;grid-template-columns:280px 1fr;gap:14px}
+@media(max-width:800px){.subgrid{grid-template-columns:1fr}}
+.slist{border:1px solid var(--line);border-radius:12px;background:#fff;max-height:66vh;overflow:auto}
+.sitem{padding:11px 13px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}
+.sitem:hover{background:#FBFCFD}
+.sitem[aria-current="true"]{background:#FFFBF0;border-left:4px solid var(--lamp)}
+.sitem small{display:block;font-family:var(--mono);font-size:11px;color:var(--ink-60)}
+.sitem .sc{float:right;font-family:var(--mono);font-weight:700;color:var(--turf)}
+.detail{border:1px solid var(--line);border-radius:12px;background:#fff;padding:18px;min-height:300px}
+.detail h4{font-family:var(--display);font-size:17px;margin:18px 0 6px}
+.detail h4:first-child{margin-top:0}
+.detail .qt{background:#F7F9FB;border-left:3px solid var(--line);padding:10px 12px;border-radius:0 8px 8px 0;font-size:14px;white-space:pre-wrap}
+.scorebox{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+@media(max-width:600px){.scorebox{grid-template-columns:1fr}}
+.scorebox .f{border:1px solid var(--line);border-radius:10px;padding:12px}
+.scorebox label{font-size:12.5px;font-weight:700;color:var(--ink-60);display:block;margin-bottom:6px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.kpi div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi .n{font-family:var(--display);font-size:26px;color:var(--night)}
+.kpi .l{font-size:12px;color:var(--ink-60)}
+.setup{font-size:14px}
+.setup pre{background:var(--night);color:#DCE7F2;padding:14px;border-radius:10px;overflow:auto;font-family:var(--mono);font-size:12px;line-height:1.6}
+.setup ol{padding-left:20px}
+.setup li{margin-bottom:8px}
+
+@media print{
+  .rail,.tbtn,.overlay,.actions,.hero-sky,.drop,.drop-zone{display:none !important}
+  .stage[hidden]{display:block !important}
+  body{background:#fff}
+  .hero{background:#fff;color:var(--ink);padding:0}
+  .hero h1,.hero h1 em{color:var(--ink);text-shadow:none;font-size:26px}
+  .card{break-inside:avoid;box-shadow:none}
+}
+</style>
+
+<header class="hero">
+  <svg class="hero-sky" viewBox="0 0 1200 340" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs><linearGradient id="lit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC64D" stop-opacity=".26"/><stop offset="1" stop-color="#FFC64D" stop-opacity="0"/>
+    </linearGradient></defs>
+    <path d="M60 340 Q600 -40 1140 340 Z" fill="url(#lit)"/>
+    <path d="M60 340 Q600 -40 1140 340" fill="none" stroke="#FFC64D" stroke-width="3" opacity=".85"/>
+    <path d="M170 340 Q600 60 1030 340" fill="none" stroke="#FFC64D" stroke-width="1" opacity=".25"/>
+    <path d="M300 340 Q600 150 900 340" fill="none" stroke="#FFC64D" stroke-width="1" opacity=".18"/>
+    <line x1="0" y1="338" x2="1200" y2="338" stroke="#1D7A52" stroke-width="8"/>
+  </svg>
+  <div id="rainfield" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">6학년 · 3~4 / 12차시 · 사회 + 과학 융합 탐구</div>
+    <div class="qmark">탐구 질문</div>
+    <h1>천안에 돔구장이<br><em>왜</em> 필요할까?</h1>
+    <p class="hero-sub">날씨 자료를 읽고, 근거를 세우고, 시장님께 보낼 제안서를 씁니다.</p>
+  </div>
+</header>
+
+<nav class="rail" aria-label="수업 단계">
+  <div class="rail-in">
+    <svg viewBox="0 0 200 70" aria-hidden="true">
+      <path id="arc" d="M14 62 Q100 -8 186 62" fill="none" stroke="#D8E0E8" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="14" cy="62" r="4" fill="#D8E0E8"/><circle cx="100" cy="27" r="4" fill="#D8E0E8"/><circle cx="186" cy="62" r="4" fill="#D8E0E8"/>
+      <circle id="ball" cx="14" cy="62" r="9" fill="#fff" stroke="#B4553C" stroke-width="2.5"/>
+      <path id="seam" d="M10 57 q4 5 0 10 M18 57 q-4 5 0 10" stroke="#B4553C" stroke-width="1.6" fill="none"/>
+    </svg>
+    <div class="stagebtns">
+      <button class="stagebtn" data-go="0" aria-current="true"><b>도입</b><span>WARM UP</span></button>
+      <button class="stagebtn" data-go="1"><b>전개</b><span>INQUIRY</span></button>
+      <button class="stagebtn" data-go="2"><b>정리</b><span>WRAP UP</span></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- ═══════ 도입 ═══════ -->
+<section class="stage" id="stage0">
+  <div class="shead" style="margin-top:6px"><b>도입 — 무슨 일이 일어나고 있을까?</b><em>10분</em></div>
+  <div class="card">
+    <h3>뉴스 세 장 읽기</h3>
+    <p class="hint">우리 지역에서 실제로 벌어지고 있는 일입니다. 셋을 나란히 놓고 보세요.</p>
+    <div class="news">
+      <article><span class="tag">계획</span><h4>천안·아산에 5만 석 돔구장 추진</h4>
+        <p>충남도가 KTX 천안아산역 인근 20만㎡ 부지에 2031년까지 약 1조 원을 들여 5만 석 이상 규모의 돔구장을 짓겠다고 발표했습니다. 프로야구 연 30경기 이상, K팝 공연·전시 150~200일 활용이 목표입니다.</p></article>
+      <article><span class="tag">날씨</span><h4>프로야구, 사상 첫 '폭염 브레이크'</h4>
+        <p>2026년 8월, 기록적인 더위로 이틀간 1·2군 전 경기가 취소됐습니다. 폭염으로 취소된 경기는 8월에만 15경기로, 2024년 한 해 전체(4경기)의 3배를 넘었습니다.</p></article>
+      <article><span class="tag">논쟁</span><h4>"1조 원, 정말 괜찮을까?"</h4>
+        <p>충남도의회 결산 분석 보고서는 타당성 조사가 이미 정한 사업을 나중에 정당화하는 수단이 될 수 있다는 우려를 담았습니다. 찬성만 있는 문제가 아닙니다.</p></article>
+    </div>
+  </div>
+  <div class="card">
+    <h3>지금 내 생각은?</h3>
+    <p class="hint">아직 자료를 보기 전입니다. 틀려도 괜찮으니 지금 마음을 그대로 적어 두세요. 수업 끝에 다시 봅니다.</p>
+    <label class="q">나는 천안에 돔구장이…</label>
+    <div class="pill-row" id="firstStance">
+      <button class="pill" aria-pressed="false">꼭 필요하다</button>
+      <button class="pill" aria-pressed="false">있으면 좋겠다</button>
+      <button class="pill" aria-pressed="false">잘 모르겠다</button>
+      <button class="pill" aria-pressed="false">필요하지 않다</button>
+    </div>
+    <label class="q" for="firstWhy">그렇게 생각한 까닭 (한 줄)</label>
+    <textarea id="firstWhy" rows="2" placeholder="예) 야구를 좋아하는데 비 오면 경기가 자주 취소돼서…"></textarea>
+    <label class="q" for="wonder">궁금한 점 하나</label>
+    <textarea id="wonder" rows="2" placeholder="예) 돔구장을 지으면 전기는 얼마나 쓸까?"></textarea>
+    <div class="actions"><button class="btn primary" data-go="1">자료 탐구하러 가기 →</button></div>
+  </div>
+</section>
+
+<!-- ═══════ 전개 ═══════ -->
+<section class="stage" id="stage1" hidden>
+  <div class="shead" style="margin-top:6px"><b>전개 ① — 자료 탐구하기</b><em>25분</em></div>
+  <div class="card">
+    <p class="hint">자료 네 개를 차례로 살펴봅니다. 각 자료 아래에 <b>알게 된 점 한 줄</b>을 꼭 남기세요. 이 문장들이 제안서의 근거가 됩니다.</p>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="0"><small>자료 1</small><b>천안의 날씨는 어떻게 변했나</b></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="1"><small>자료 2</small><b>취소된 경기들</b></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="2"><small>자료 3</small><b>야외구장 vs 돔구장</b></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="3"><small>자료 4</small><b>장점과 고려할 점</b></button>
+    </div>
+
+    <div class="panel" role="tabpanel" data-panel="0">
+      <h3>자료 1 · 충남(천안 포함)의 더위 기록</h3>
+      <p class="hint">폭염일수는 하루 최고기온이 33℃ 이상인 날, 열대야일수는 밤 최저기온이 25℃ 아래로 내려가지 않은 날의 수입니다.</p>
+      <div class="stats">
+        <div class="stat"><div class="n">14.4<small>℃</small></div><div class="l">2024년 충남 연평균기온 — 역대 1위</div></div>
+        <div class="stat"><div class="n">1~3<small>위</small></div><div class="l">최근 3년이 모두 역대 최고 기온 순위 안에</div></div>
+        <div class="stat"><div class="n">25.6<small>일</small></div><div class="l">2024년 열대야일수 — 역대 1위</div></div>
+      </div>
+      <div class="chart"><h5>충남 연간 폭염일수 상위 3개 연도 (1973~2025년 중)</h5>
+        <div class="bar"><span>2018년</span><span class="track"><i class="fill" data-w="98"></i></span><span class="v">32.8일</span></div>
+        <div class="bar"><span>2024년</span><span class="track"><i class="fill" data-w="97"></i></span><span class="v">32.6일</span></div>
+        <div class="bar"><span>1994년</span><span class="track"><i class="fill" data-w="96"></i></span><span class="v">32.2일</span></div>
+      </div>
+      <div class="chart"><h5>충남 연간 열대야일수 상위 3개 연도</h5>
+        <div class="bar alert"><span>2024년</span><span class="track"><i class="fill" data-w="100"></i></span><span class="v">25.6일</span></div>
+        <div class="bar alert"><span>1994년</span><span class="track"><i class="fill" data-w="77"></i></span><span class="v">19.7일</span></div>
+        <div class="bar alert"><span>2018년</span><span class="track"><i class="fill" data-w="67"></i></span><span class="v">17.2일</span></div>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-60)">👀 <b>눈여겨볼 점</b> — 1994년은 30년도 더 전이지만, 2018년과 2024년은 최근입니다. 더운 해가 <b>점점 가까이 몰려</b> 있습니다.</p>
+      <label class="q" for="n1">자료 1에서 알게 된 점</label>
+      <textarea id="n1" rows="2" placeholder="예) 천안이 있는 충남은 최근 몇 년 사이 더운 날이 크게 늘었다."></textarea>
+      <div class="srcs">출처 · 대전지방기상청 「2025년 충남권 연 기후특성 분석」(2026.1.6)<br>직접 조회 · 기상자료개방포털 data.kma.go.kr → 폭염일수 → 지점 '천안'</div>
+    </div>
+
+    <div class="panel" role="tabpanel" data-panel="1" hidden>
+      <h3>자료 2 · 날씨 때문에 열리지 못한 경기들</h3>
+      <p class="hint">비와 더위는 실제로 경기를 멈춰 세웁니다. 최근 3년 사이 일어난 일입니다.</p>
+      <ul class="tl">
+        <li><time>2024. 5. 5.</time><b>어린이날 프로야구 전 경기 우천 취소</b><p>전국에 내린 폭우로 그날 예정된 경기가 모두 취소됐습니다. 어린이날 경기가 전부 취소된 것은 1985년 이후 39년 만이었습니다.</p></li>
+        <li><time>2025. 10.</time><b>가을야구 일정이 밀리다</b><p>포스트시즌 시작이 비로 하루 더 미뤄졌고, 준플레이오프 2차전과 플레이오프 1차전도 우천 연기됐습니다.</p></li>
+        <li><time>2026. 8. 4.~6.</time><b>KBO 역사상 첫 '폭염 브레이크'</b><p>폭염 중대경보로 이틀간 1·2군 전 경기가 취소됐습니다. 사상 처음이었습니다.</p></li>
+      </ul>
+      <div class="chart" style="margin-top:18px"><h5>폭염으로 취소된 프로야구 경기 수</h5>
+        <div class="bar"><span>2024년 전체</span><span class="track"><i class="fill" data-w="27"></i></span><span class="v">4경기</span></div>
+        <div class="bar alert"><span>2026년 8월</span><span class="track"><i class="fill" data-w="100"></i></span><span class="v">15경기</span></div>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-60)">👀 <b>눈여겨볼 점</b> — 예전에는 <b>비</b> 때문에 경기가 취소됐지만, 이제는 <b>더위</b> 때문에도 취소됩니다.</p>
+      <label class="q" for="n2">자료 2에서 알게 된 점</label>
+      <textarea id="n2" rows="2" placeholder="예) 날씨 때문에 경기가 취소되는 일이 최근 훨씬 잦아졌다."></textarea>
+      <div class="srcs">출처 · 스포츠경향(2026.8.10), 오마이스타(2026.8), 나무위키 KBO 리그 시즌 문서</div>
+    </div>
+
+    <div class="panel" role="tabpanel" data-panel="2" hidden>
+      <h3>자료 3 · 야외구장과 돔구장, 무엇이 다를까</h3>
+      <p class="hint">두 구장을 같은 기준으로 나란히 비교했습니다. 어떤 칸이 가장 눈에 들어오나요?</p>
+      <div class="tblwrap"><table>
+        <thead><tr><th>비교 기준</th><th>야외구장</th><th>돔구장</th></tr></thead>
+        <tbody>
+          <tr><th>날씨 영향</th><td>비·눈·폭염·미세먼지에 그대로 노출 → 취소·연기</td><td class="dome">지붕이 막아 줌 → 날씨와 상관없이 경기 가능</td></tr>
+          <tr><th>쓸 수 있는 날</th><td>봄~가을 중심, 한여름·한겨울은 어려움</td><td class="dome">1년 내내(365일) 사용</td></tr>
+          <tr><th>짓는 비용</th><td>대전 한화생명볼파크 약 1,579억 원<br><small>(국비 200억 + 시비 949억 + 구단 430억)</small></td><td class="dome">천안·아산 계획 약 1조 원<br><small>야외구장의 6배가 넘는 금액</small></td></tr>
+          <tr><th>유지·관리</th><td>잔디 관리 위주, 전기 사용 적음</td><td class="dome">조명·냉난방·환기를 계속 → 전기 사용과 관리비 큼</td></tr>
+          <tr><th>쓰임새</th><td>주로 야구 경기</td><td class="dome">야구·축구·공연·전시·행사까지</td></tr>
+          <tr><th>경기장 잔디</th><td>햇빛을 받는 천연잔디</td><td class="dome">인조잔디 또는 특수 관리 필요</td></tr>
+          <tr><th>관람 느낌</th><td>탁 트인 하늘, 바깥 공기</td><td class="dome">덥지도 춥지도 않지만 답답할 수 있음</td></tr>
+        </tbody>
+      </table></div>
+      <label class="q" for="n3">자료 3에서 알게 된 점</label>
+      <textarea id="n3" rows="2" placeholder="예) 돔구장은 날씨 걱정이 없는 대신 짓는 데 훨씬 많은 돈이 든다."></textarea>
+      <div class="srcs">출처 · 충남도 보도자료(2026.2.2), 머니투데이(2026.4.13), 위키백과 '대전한화생명볼파크'</div>
+    </div>
+
+    <div class="panel" role="tabpanel" data-panel="3" hidden>
+      <h3>자료 4 · 돔구장의 장점과 고려할 점</h3>
+      <p class="hint">좋은 제안서에는 <b>반대 의견에 대한 답</b>도 들어 있습니다. 오른쪽도 꼭 읽어 보세요.</p>
+      <div class="twocol">
+        <div class="box good"><h4>이런 점이 좋아요</h4><ul>
+          <li>비·눈·폭염·한파에 경기가 취소되지 않습니다.</li>
+          <li>여름과 겨울에도 시민이 운동하고 관람할 수 있습니다.</li>
+          <li>야구뿐 아니라 K팝 공연·전시·축제까지 열 수 있습니다. (계획상 연 150~200일)</li>
+          <li>KTX 천안아산역에서 걸어서 10~20분, 다른 지역 사람도 오기 쉽습니다.</li>
+          <li>사람이 모이면 주변 가게가 살아나고 일자리가 생깁니다.</li>
+        </ul></div>
+        <div class="box care"><h4>이런 점은 따져 봐야 해요</h4><ul>
+          <li>약 1조 원이 듭니다. 그 돈으로 다른 일을 할 수도 있습니다.</li>
+          <li>다 짓고 난 뒤에도 냉난방·조명에 관리비가 계속 듭니다.</li>
+          <li>충남도의회는 타당성 조사가 <b>이미 정한 사업을 정당화하는 수단</b>이 될 수 있다고 우려했습니다.</li>
+          <li>전기를 많이 쓰면 오히려 온실가스가 늘 수 있습니다.</li>
+          <li>경기가 없는 날에 비어 있으면 세금이 낭비됩니다.</li>
+        </ul></div>
+      </div>
+      <label class="q" for="n4">자료 4에서 알게 된 점</label>
+      <textarea id="n4" rows="2" placeholder="예) 돔구장은 좋은 점도 있지만 돈과 전기 문제를 함께 생각해야 한다."></textarea>
+      <div class="srcs">출처 · 전자신문(2025.11.18), 굿모닝충청(2026.6.9) 충남도의회 결산분석 보고서 관련 보도</div>
+    </div>
+  </div>
+
+  <div class="shead"><b>전개 ② — 3Y로 이유 넓히기</b><em>10분</em></div>
+  <div class="card">
+    <h3>왜 필요한지, 세 겹으로 생각하기</h3>
+    <p class="hint">가장 안쪽 '나'에서 시작해 바깥으로 넓혀 갑니다. 앞에서 적은 자료를 근거로 쓰세요.</p>
+    <div class="y3"><div class="ring r1">
+      <div class="ylab"><i>WHY FOR THE WORLD</i><b>세상 전체에 필요한 이유는?</b></div>
+      <div class="ring r2">
+        <div class="ylab"><i>WHY FOR THE COUNTRY</i><b>우리나라에 필요한 이유는?</b></div>
+        <div class="ring r3">
+          <div class="ylab"><i>WHY FOR ME</i><b>나에게 필요한 이유는?</b></div>
+          <textarea id="y1" rows="3" placeholder="예) 야구 경기가 취소되어 못 볼 때가 많은데, 돔구장이 있으면 매번 볼 수 있을 것 같다."></textarea>
+        </div>
+        <textarea id="y2" rows="3" style="margin-top:12px" placeholder="예) 매년 여름이 더워지고 있어서 야외 활동이 어렵고, 여름에 운동 경기를 여는 것이 힘들다."></textarea>
+      </div>
+      <textarea id="y3t" rows="3" style="margin-top:12px" placeholder="예) 전 세계적으로 폭염·폭설 같은 이상기후가 늘어나 야외에서 활동하기 어려운 날씨가 많아지고 있다."></textarea>
+    </div></div>
+  </div>
+
+  <div class="shead"><b>전개 ③ — 제안서 쓰기</b><em>논술형 평가 · 15분</em></div>
+
+  <!-- GRASPS 수행과제 -->
+  <div class="card">
+    <h3>오늘의 수행과제</h3>
+    <p class="hint">여러분은 지금부터 학생이 아니라 <b>천안시 어린이 시민참여단</b>입니다. 아래 상황을 읽고 역할에 맞게 제안서를 쓰세요.</p>
+    <div class="grasps">
+      <div class="g"><div class="k">SITUATION<b>상황</b></div><div class="v">천안시에서 새로운 야구장을 건립하려고 하며, <b>일반 야구장과 돔구장</b>에 대한 시민 의견을 듣고 있습니다.</div></div>
+      <div class="g"><div class="k">ROLE<b>나의 역할</b></div><div class="v">천안시 어린이 시민참여단</div></div>
+      <div class="g"><div class="k">AUDIENCE<b>읽는 사람</b></div><div class="v">천안시장님과 천안시민</div></div>
+      <div class="g"><div class="k">GOAL<b>목표</b></div><div class="v">날씨가 생활에 미치는 영향을 근거로, 천안 돔구장 건립에 대한 제안서를 작성하기</div></div>
+      <div class="g"><div class="k">PRODUCT<b>결과물</b></div><div class="v">돔구장 건립에 대한 어린이 시민 제안서 1편</div></div>
+      <div class="g hi"><div class="k">STANDARDS<b>평가 기준</b></div><div class="v">① 날씨의 영향 이해 &nbsp;② 타당한 근거 제시 &nbsp;③ 주장과 근거의 논리적 연결<br><small style="color:var(--ink-60)">아래 채점 기준표에서 자세히 확인하세요.</small></div></div>
+    </div>
+    <p class="hint" style="margin:14px 0 0">💡 <b>시민참여단답게 쓰려면</b> — 나 한 사람의 취향이 아니라 <b>천안시민 전체</b>에게 어떤 점이 좋은지 말해야 합니다. 시민 의견을 듣는 자리이므로, 자료 4에서 본 <b>걱정거리에 대한 답</b>까지 담으면 훨씬 설득력이 생깁니다.</p>
+  </div>
+
+  <!-- 채점 기준 -->
+  <div class="card rub">
+    <h3>먼저 채점 기준을 확인하세요 <span class="badge">5점 만점</span></h3>
+    <p class="hint">선생님은 이 한 가지를 봅니다. 표를 보면서 쓰면 점수가 달라집니다.</p>
+    <div class="tblwrap"><table>
+      <thead><tr><th>채점 요소</th><th>척도</th><th>척도별 응답 특성</th></tr></thead>
+      <tbody>
+        <tr><th rowspan="3">날씨가<br>생활에<br>미치는<br>영향을<br>판단하기</th><td class="sc">5점 (A)</td><td>날씨가 생활과 야외 활동에 미치는 영향을 바탕으로 천안에 돔구장이 필요한 이유를 <b>2가지 이상</b>의 구체적이고 타당한 근거를 들어 논리적으로 설명함.</td></tr>
+        <tr><td class="sc">3점 (B)</td><td>날씨가 생활과 야외 활동에 미치는 영향을 바탕으로 천안에 돔구장이 필요한 이유 <b>1가지</b>를 근거를 들어 설명함.</td></tr>
+        <tr><td class="sc">1점 (C)</td><td>돔구장이 필요하다는 의견은 나타냈으나 날씨가 생활에 미치는 영향과 관련된 <b>근거가 부족</b>하거나 <b>설명의 연결이 미흡</b>함.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="hint" style="margin:14px 0 0">✍️ <b>A를 받는 열쇠</b> — ① <b>날씨가 생활과 야외 활동에 미치는 영향</b>에서 이야기를 시작하기 ② 돔구장이 필요한 이유를 <b>두 가지 이상</b> 들기 ③ 이유마다 자료의 <b>구체적인 숫자나 사례</b>를 근거로 붙이기</p>
+  </div>
+
+  <!-- 제안서 -->
+  <div class="card">
+    <div class="proposal">
+      <div class="proposal-h"><b>돔구장 건립에 대한 어린이 시민 제안서</b><span>보내는 사람 : 천안시 어린이 시민참여단 &nbsp;·&nbsp; 받는 사람 : 천안시장님과 천안시민</span></div>
+      <div class="proposal-b">
+        <label class="q" for="pTitle">제목 — 내 주장이 한눈에 드러나게</label>
+        <input type="text" id="pTitle" placeholder="예) 날씨가 바뀌었습니다, 천안에 돔구장이 필요합니다">
+        <label class="q" for="pClaim">① 나의 주장</label>
+        <textarea id="pClaim" rows="2" placeholder="저는 천안에 돔구장을 …해야 한다고 생각합니다."></textarea>
+        <label class="q" for="pReason">② 근거 — 돔구장이 필요한 이유를 <b>두 가지 이상</b>, 날씨의 영향과 이어서
+          <button class="btn ghost sm" id="pullNotes" style="margin-left:6px">내가 쓴 메모 불러오기</button></label>
+        <textarea id="pReason" rows="6" placeholder="첫째, (자료 ○에 따르면) …&#10;둘째, …&#10;셋째, …"></textarea>
+        <div class="count" id="cReason">0자 · 기상 요소 0개 확인</div>
+        <label class="q" for="pCounter">③ 반대 의견에 대한 나의 답</label>
+        <textarea id="pCounter" rows="3" placeholder="물론 1조 원이라는 돈이 든다는 걱정이 있습니다. 하지만 …"></textarea>
+        <label class="q" for="pClose">④ 마무리 요청</label>
+        <textarea id="pClose" rows="2" placeholder="그래서 저는 …을 부탁드립니다."></textarea>
+      </div>
+    </div>
+    <div class="actions"><button class="btn ghost" id="checkBtn">빠진 곳 확인하기</button></div>
+  </div>
+
+  <!-- 손글씨 업로드 + OCR -->
+  <div class="card">
+    <h3>공책에 손글씨로 썼나요? 📷</h3>
+    <p class="hint">종이에 쓴 제안서를 사진으로 찍어 올리면 글씨를 읽어 텍스트로 바꿔 줍니다. 바뀐 글을 확인하고 틀린 곳만 고치세요.</p>
+    <div class="drop-zone" id="dz" tabindex="0" role="button" aria-label="사진 올리기">
+      <div class="ic">📄</div>
+      <p><b>사진 찍기</b> 또는 <b>이미지 파일 올리기</b><br><small>글씨가 잘 보이게 밝은 곳에서, 종이를 화면에 꽉 채워 찍으세요.</small></p>
+    </div>
+    <input type="file" id="file" accept="image/*" capture="environment" hidden>
+    <div id="shotWrap"><img id="shot" alt="올린 사진 미리보기"></div>
+    <div class="actions">
+      <button class="btn primary" id="ocrBtn" disabled>글씨 읽기 (OCR)</button>
+      <button class="btn ghost" id="ocrClear" disabled>사진 지우기</button>
+    </div>
+    <label class="q" for="ocrText" style="margin-top:18px">읽어 온 글 — 틀린 글자를 직접 고치세요</label>
+    <textarea id="ocrText" rows="8" placeholder="사진을 올리고 '글씨 읽기'를 누르면 여기에 나타납니다."></textarea>
+    <div class="actions"><button class="btn ghost sm" id="ocrToForm">위 내용을 제안서 칸으로 나누어 넣기</button></div>
+  </div>
+
+  <!-- 예시 답안 (잠금) -->
+  <div class="card">
+    <h3>예시 답안 살펴보기</h3>
+    <p class="hint">내 글을 먼저 쓴 다음에 열립니다. 예시를 베끼지 말고, <b>내 글에 무엇이 빠졌는지</b> 찾는 데 쓰세요.</p>
+    <div id="sampleLock" class="lock">🔒 제안서를 <b>100자 이상</b> 쓰면 열립니다. <span id="lockCount" style="font-family:var(--mono)">(0자)</span></div>
+    <div id="samples" class="samples" hidden>
+      <article><b>예시 답안 1</b>천안에 돔구장 건립이 꼭 필요합니다. 날씨가 더우면 야외 활동 중 온열 질환 위험이 커지고, 폭우가 내리면 경기가 취소되어 시민들이 불편을 겪습니다. 돔구장이 생기면 첫째, 폭염이나 비와 상관없이 연중 안전하게 경기를 관람할 수 있습니다. 둘째, 날씨 제약이 없어 다양한 대형 문화 행사를 열어 지역 발전에 도움이 됩니다. 따라서 시민의 안전한 여가 생활과 천안의 발전을 위해 돔구장을 지어주실 것을 제안합니다.</article>
+      <article><b>예시 답안 2</b>저는 천안시 돔구장 건립을 제안합니다. 요즘 이상 기후로 폭염과 한파가 심해져 밖에서 운동이나 여가를 즐기기가 매우 어렵습니다. 돔구장은 날씨의 영향을 받지 않으므로 꼭 필요합니다. 그 근거로 첫째, 비나 미세먼지가 심한 날에도 시민들이 사계절 내내 건강하게 체육활동을 할 수 있습니다. 둘째, 날씨로 인한 행사 취소 걱정이 없어 운영 효율성이 높아집니다. 날씨 걱정 없는 쾌적한 천안시를 위해 돔구장 건립을 제안합니다.</article>
+      <p class="hint" style="margin-top:12px">두 예시 모두 <b>기상 요소를 이름으로 부르고</b>(폭염·폭우·한파·미세먼지), <b>근거를 첫째·둘째로 나누어</b> 썼습니다. 내 글에도 이 두 가지가 있나요?</p>
+    </div>
+  </div>
+
+  <div class="actions"><button class="btn primary" data-go="2">정리 단계로 →</button></div>
+</section>
+
+<!-- ═══════ 정리 ═══════ -->
+<section class="stage" id="stage2" hidden>
+  <div class="shead" style="margin-top:6px"><b>정리 — 탐구 결과 문장으로 남기기</b><em>10분</em></div>
+  <div class="card">
+    <h3>오늘의 탐구 결과</h3>
+    <p class="hint">빈칸을 채워 한 문장으로 완성합니다. 오늘 배운 것을 한 줄로 압축해 보세요.</p>
+    <div class="fillsent">
+      천안에 돔구장을 건립하는 까닭은 <input type="text" id="f1" placeholder="무엇과" size="10">과(와) 관련이 있다.
+      너무 <input type="text" id="f2" placeholder="어떤 날씨" size="10"> 날씨에는 야외 활동이 힘들고,
+      날씨가 <input type="text" id="f3" placeholder="어떤 날씨" size="10"> 경우에만 야외 활동을 하기 좋으므로,
+      연중 <input type="text" id="f4" placeholder="어떻게" size="14"> 돔구장이 필요하다.
+    </div>
+    <label class="q" for="changed">내 생각의 변화 — 도입에서 적은 첫 생각과 비교해 보세요</label>
+    <textarea id="changed" rows="2" placeholder="처음에는 …라고 생각했는데, 자료를 보고 나서는 …"></textarea>
+  </div>
+
+  <div class="card">
+    <h3>채점 기준으로 스스로 점검하기</h3>
+    <p class="hint">선생님의 채점 기준(5점 A) 그대로입니다. 체크가 안 되는 칸이 있으면 전개 단계로 돌아가 고치세요.</p>
+    <label class="chk"><input type="checkbox"><span><b>①</b> 날씨가 <b>생활과 야외 활동에 미치는 영향</b>을 썼다.</span></label>
+    <label class="chk"><input type="checkbox"><span><b>②</b> 그 영향을 바탕으로 <b>돔구장이 필요한 이유</b>를 <b>두 가지 이상</b> 들었다.</span></label>
+    <label class="chk"><input type="checkbox"><span><b>③</b> 이유마다 <b>구체적이고 타당한 근거</b>(32.6일, 15경기, 1조 원 같은 자료의 숫자·사례)를 붙였다.</span></label>
+    <label class="chk"><input type="checkbox"><span><b>④</b> 날씨의 영향 → 이유 → 근거가 <b>끊기지 않고 이어지게</b> 설명했다.</span></label>
+    <p class="hint" style="margin-top:14px">①~④가 모두 ✓ 이면 <b>5점(A)</b> 수준입니다. 이유가 한 가지뿐이면 3점(B), 날씨와의 연결이 끊기면 1점(C)입니다.<br>
+    ➕ <b>채점에는 들어가지 않지만</b> 제안서를 더 좋게 만드는 것 — 반대 의견(1조 원 비용, 전기 사용)에 대한 내 생각을 밝히기.</p>
+  </div>
+
+  <div class="card">
+    <h3>선생님께 제출하기</h3>
+    <p class="hint">이름과 번호를 적고 제출하면 선생님 화면에서 바로 확인할 수 있습니다.</p>
+    <div class="idrow">
+      <div><label class="q" for="sClass" style="margin-top:0">반</label><input type="text" id="sClass" placeholder="예) 6-3"></div>
+      <div><label class="q" for="sNo" style="margin-top:0">번호</label><input type="text" id="sNo" placeholder="예) 12"></div>
+      <div><label class="q" for="sName" style="margin-top:0">이름</label><input type="text" id="sName" placeholder="예) 김OO"></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="submitBtn">제출하기</button>
+      <button class="btn ghost" id="dl">활동지 내려받기 (.txt)</button>
+      <button class="btn ghost" id="cp">전체 복사</button>
+      <button class="btn ghost" onclick="window.print()">인쇄 / PDF</button>
+    </div>
+    <div class="state" id="netState"><span class="dot"></span>연결 상태를 확인하는 중…</div>
+  </div>
+</section>
+</main>
+
+<button class="tbtn" id="tOpen">교사용</button>
+
+<!-- ═══════ 교사 화면 ═══════ -->
+<div class="overlay" id="tPanel" hidden>
+  <div class="obar">
+    <b>교사용 대시보드</b>
+    <span class="sp"></span>
+    <button class="btn ghost sm" id="reload">새로고침</button>
+    <button class="btn ghost sm" id="csv">CSV 내려받기</button>
+    <button class="btn warm sm" id="tClose">닫기</button>
+  </div>
+  <div class="otabs" role="tablist">
+    <button class="otab" role="tab" aria-selected="true" data-ot="0">제출 현황</button>
+    <button class="otab" role="tab" aria-selected="false" data-ot="1">수업 안내 · 루브릭</button>
+    <button class="otab" role="tab" aria-selected="false" data-ot="2">설정 (Firebase · AI)</button>
+  </div>
+
+  <div class="owrap" data-opanel="0">
+    <div class="kpi">
+      <div><div class="n" id="kTotal">0</div><div class="l">제출 인원</div></div>
+      <div><div class="n" id="kGraded">0</div><div class="l">채점 완료</div></div>
+      <div><div class="n" id="kAvg">–</div><div class="l">평균 점수 (5점 만점)</div></div>
+      <div><div class="n" id="kOcr">0</div><div class="l">손글씨 사진 제출</div></div>
+    </div>
+    <div class="subgrid">
+      <div class="slist" id="slist"><div style="padding:16px;font-size:14px;color:var(--ink-60)">아직 제출이 없습니다.</div></div>
+      <div class="detail" id="detail"><p style="color:var(--ink-60);font-size:14px">왼쪽에서 학생을 선택하세요.</p></div>
+    </div>
+  </div>
+
+  <div class="owrap" data-opanel="1" hidden>
+    <div class="card">
+      <h3>수업 의도</h3>
+      <p>실생활 기상 문제와 지역 이슈를 연계해 날씨가 우리 생활에 미치는 영향을 탐구하고, 돔구장 필요성을 논리적으로 설득하는 제안서 작성 활동을 통해 기후 변화 대응 의식과 문제 해결 능력을 함양한다.</p>
+      <h3 style="margin-top:18px">단계별 운영 팁</h3>
+      <ul style="font-size:14px">
+        <li><b>도입</b> — 뉴스 3장을 나란히 제시해 찬성 정보만 주지 않도록 했습니다. 첫 생각을 기록시킨 뒤 자료로 넘어가야 정리 단계의 '생각의 변화'가 살아납니다.</li>
+        <li><b>전개 ①</b> — 자료 1~4를 모둠별로 나눠 맡고 전체 공유(직소)하면 25분에 소화됩니다. 자료 3의 비용 비교(1,579억 vs 1조)에서 반응이 큽니다.</li>
+        <li><b>전개 ③</b> — 채점 기준표를 <b>쓰기 전에</b> 노출합니다. 근거 칸의 '기상 요소 n개 확인' 카운터가 학생 스스로 A 요건을 점검하게 합니다.</li>
+        <li><b>예시 답안</b>은 100자 이상 작성 후에만 열리도록 잠갔습니다. 베끼기 방지 + 자기 점검용입니다.</li>
+        <li><b>손글씨</b> 학생은 공책에 쓰고 사진 업로드 → OCR → 확인 후 제출하면 동일하게 대시보드에 모입니다.</li>
+      </ul>
+      <h3 style="margin-top:18px">수행과제 (GRASPS)</h3>
+      <div class="tblwrap"><table>
+        <thead><tr><th>요소</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><th>G Goal</th><td>날씨가 생활에 미치는 영향을 근거로 천안 돔구장 건립에 대한 제안서 작성하기</td></tr>
+          <tr><th>R Role</th><td>천안시 어린이 시민참여단</td></tr>
+          <tr><th>A Audience</th><td>천안시장과 천안시민</td></tr>
+          <tr><th>S Situation</th><td>천안시에서 새로운 야구장을 건립하려고 하며, 일반 야구장과 돔구장에 대한 시민 의견을 듣고 있음</td></tr>
+          <tr><th>P Product</th><td>돔구장 건립에 대한 어린이 시민 제안서</td></tr>
+          <tr><th>S Standards</th><td>날씨의 영향 이해, 타당한 근거 제시, 주장과 근거의 논리적 연결</td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint" style="margin-top:10px"><b>수업 중 강조</b> — 학생이 '나에게 좋은 점'에 머물지 않도록 <b>Role(어린이 시민참여단)</b>과 <b>Audience(천안시민)</b>를 계속 상기시켜 주세요. Situation이 '시민 의견을 듣는 자리'이므로 자료 4의 반대 논거를 다룬 학생일수록 Standards의 '논리적 연결'에서 강점을 보입니다.</p>
+
+      <h3 style="margin-top:18px">채점 기준 (1요소 · 5점 만점)</h3>
+      <div class="rub tblwrap"><table>
+        <thead><tr><th>채점 요소</th><th>척도</th><th>척도별 응답 특성</th></tr></thead>
+        <tbody>
+          <tr><th rowspan="3">날씨가 생활에 미치는 영향을 판단하기</th><td class="sc">5점 (A)</td><td>날씨가 생활과 야외 활동에 미치는 영향을 바탕으로 천안에 돔구장이 필요한 이유를 <b>2가지 이상</b>의 구체적이고 타당한 근거를 들어 논리적으로 설명함.</td></tr>
+          <tr><td class="sc">3점 (B)</td><td>날씨가 생활과 야외 활동에 미치는 영향을 바탕으로 천안에 돔구장이 필요한 이유 <b>1가지</b>를 근거를 들어 설명함.</td></tr>
+          <tr><td class="sc">1점 (C)</td><td>돔구장이 필요하다는 의견은 나타냈으나 날씨가 생활에 미치는 영향과 관련된 근거가 부족하거나 설명의 연결이 미흡함.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint" style="margin-top:10px"><b>채점 요령</b> — ① 돔구장이 필요한 <b>이유가 몇 가지</b>인지 센다(2가지 이상 → A, 1가지 → B) ② 각 이유가 <b>날씨의 영향</b>에서 출발하는지 본다 ③ 이유는 있으나 날씨와의 연결이 끊기거나 근거가 없으면 개수와 상관없이 C.</p>
+      <h3 style="margin-top:18px">예시 답안</h3>
+      <div class="samples">
+        <article><b>예시 답안 1</b>천안에 돔구장 건립이 꼭 필요합니다. 날씨가 더우면 야외 활동 중 온열 질환 위험이 커지고, 폭우가 내리면 경기가 취소되어 시민들이 불편을 겪습니다. 돔구장이 생기면 첫째, 폭염이나 비와 상관없이 연중 안전하게 경기를 관람할 수 있습니다. 둘째, 날씨 제약이 없어 다양한 대형 문화 행사를 열어 지역 발전에 도움이 됩니다. 따라서 시민의 안전한 여가 생활과 천안의 발전을 위해 돔구장을 지어주실 것을 제안합니다.</article>
+        <article><b>예시 답안 2</b>저는 천안시 돔구장 건립을 제안합니다. 요즘 이상 기후로 폭염과 한파가 심해져 밖에서 운동이나 여가를 즐기기가 매우 어렵습니다. 돔구장은 날씨의 영향을 받지 않으므로 꼭 필요합니다. 그 근거로 첫째, 비나 미세먼지가 심한 날에도 시민들이 사계절 내내 건강하게 체육활동을 할 수 있습니다. 둘째, 날씨로 인한 행사 취소 걱정이 없어 운영 효율성이 높아집니다. 날씨 걱정 없는 쾌적한 천안시를 위해 돔구장 건립을 제안합니다.</article>
+      </div>
+      <h3 style="margin-top:18px">자료 출처</h3>
+      <p style="font-size:12.5px;font-family:var(--mono);line-height:1.9">
+        · 대전지방기상청, 2025년 충남권 연 기후특성 분석 보도자료(2026.1.6)<br>
+        · 충청남도 보도자료, 천안아산 돔구장 건립 TF 첫 회의(2026.2.2)<br>
+        · 전자신문(2025.11.18) / 머니투데이(2026.4.13) / 굿모닝충청(2026.6.9)<br>
+        · 스포츠경향(2026.8.10), 오마이스타(2026.8) — KBO 폭염 취소 경기<br>
+        · 위키백과 '대전한화생명볼파크' — 총사업비 구성<br>
+        · 기상자료개방포털 data.kma.go.kr — 천안 지점 직접 조회용
+      </p>
+    </div>
+  </div>
+
+  <div class="owrap setup" data-opanel="2" hidden>
+    <div class="card">
+      <h3>① Firebase 연결</h3>
+      <p>학생 제출을 모으려면 <b>이 HTML 파일 안의 <code>FIREBASE_CONFIG</code> 값</b>을 선생님 프로젝트 값으로 바꿔 주세요. 값을 비워 두면 제출은 <b>이 브라우저 안에서만</b> 보이는 연습 모드로 동작합니다.</p>
+      <ol>
+        <li>console.firebase.google.com → 프로젝트 만들기 → 웹 앱 추가 → 설정값 복사</li>
+        <li>빌드 → Firestore Database 만들기 (위치: asia-northeast3)</li>
+        <li>아래 코드의 자리에 값을 붙여넣고 저장</li>
+      </ol>
+      <pre>const FIREBASE_CONFIG = {
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAHd64FSeXU4b4UOD99n0ynwzaRNckjyqM",
+  authDomain: "dome-writing.firebaseapp.com",
+  projectId: "dome-writing",
+  storageBucket: "dome-writing.firebasestorage.app",
+  messagingSenderId: "141495235514",
+  appId: "1:141495235514:web:be829400d073ab5dda6383"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const CLASS_CODE = "cheonan-dome-2026";   // 학급 구분용, 반마다 다르게</pre>
+      <p><b>Firestore 규칙</b> — 수업 기간에만 열어 두고 끝나면 <code>false</code>로 닫아 주세요.</p>
+      <pre>rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    match /dome_submissions/{doc} {
+      allow read, write: if request.time &lt; timestamp.date(2026, 12, 31);
+    }
+  }
+}</pre>
+      <p style="color:var(--clay);font-size:13.5px"><b>안내</b> — 학생 이름이 저장되므로 학급 코드는 공개하지 마시고, 수업이 끝나면 컬렉션을 삭제하거나 규칙을 닫아 주세요.</p>
+    </div>
+    <div class="card">
+      <h3>② AI (손글씨 OCR · 채점 도우미)</h3>
+      <p>Claude 또는 Gemini 중 하나를 고르고 그 서비스의 API 키를 넣으세요. 키는 이 브라우저 메모리에만 있고 새로고침하면 지워집니다.</p>
+      <div class="idrow" style="grid-template-columns:1fr 1fr">
+        <div><label class="q" for="aiProvider" style="margin-top:0">AI 공급자</label>
+          <select id="aiProvider">
+            <option value="gemini">Gemini (Google AI Studio)</option>
+            <option value="claude">Claude (Anthropic)</option>
+          </select></div>
+        <div><label class="q" for="aiModel" style="margin-top:0">모델 이름</label>
+          <input type="text" id="aiModel" value="gemini-3.6-flash"></div>
+      </div>
+      <label class="q" for="apiKey">API 키</label>
+      <input type="text" id="apiKey" placeholder="Gemini는 AIza… / Claude는 sk-ant-…">
+      <div class="actions"><button class="btn primary" id="saveKey">키 적용</button></div>
+      <p class="hint" style="margin-top:14px">
+        <b>Gemini 키 받는 곳</b> — aistudio.google.com → Get API key. 무료 등급이 있어 한 학급 분량 OCR은 대체로 무료 범위에서 됩니다. 모델이 안 되면 <code>gemini-2.5-flash</code>로 바꿔 보세요.<br>
+        <b>Claude 키 받는 곳</b> — console.anthropic.com. 모델 칸에 <code>claude-sonnet-4-6</code>을 넣으세요. Claude 안에서 미리 볼 때는 키 없이도 동작합니다.
+      </p>
+      <p class="hint" style="color:var(--clay)">⚠️ 공개된 사이트에 키를 넣으면 누구나 쓸 수 있게 되고 요금도 선생님 앞으로 갑니다. 학생 기기마다 넣지 마시고, 손글씨 OCR은 <b>교사 기기 한 대에서 모아 처리</b>하시길 권합니다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════ 설정 ══════════════ */
+const FIREBASE_CONFIG = {
+  apiKey: "", authDomain: "", projectId: "", storageBucket: "", messagingSenderId: "", appId: ""
+};
+const CLASS_CODE = "cheonan-dome-2026";
+const COLLECTION = "dome_submissions";
+
+(function(){
+"use strict";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+let API_KEY = "";
+let AI_PROVIDER = "gemini";
+let AI_MODEL = "gemini-3.6-flash";
+
+/* 히어로 빗방울 */
+const rf = $('#rainfield');
+for(let i=0;i<26;i++){
+  const d=document.createElement('i'); d.className='drop';
+  d.style.left=(3+Math.random()*94)+'%';
+  d.style.animationDuration=(1.6+Math.random()*1.6)+'s';
+  d.style.animationDelay=(Math.random()*2.6)+'s';
+  rf.appendChild(d);
+}
+
+/* 단계 이동 */
+const arc=$('#arc'), ball=$('#ball'), seam=$('#seam'), len=arc.getTotalLength();
+const stages=[$('#stage0'),$('#stage1'),$('#stage2')];
+function moveBall(i){
+  const p=arc.getPointAtLength(len*(i/2));
+  ball.setAttribute('cx',p.x); ball.setAttribute('cy',p.y);
+  seam.setAttribute('transform',`translate(${p.x-14},${p.y-62})`);
+}
+function go(i){
+  stages.forEach((s,k)=>s.hidden=(k!==i));
+  $$('.stagebtn').forEach((b,k)=>b.setAttribute('aria-current',k===i));
+  moveBall(i); window.scrollTo({top:0,behavior:'smooth'});
+  if(i===1) requestAnimationFrame(fillBars);
+}
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.go)));
+moveBall(0);
+
+/* 자료 탭 */
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{
+  const n=t.dataset.tab;
+  $$('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
+  $$('.panel').forEach(p=>p.hidden=(p.dataset.panel!==n));
+  fillBars();
+}));
+function fillBars(){
+  $$('.fill').forEach(f=>{
+    const pn=f.closest('.panel');
+    if(pn && pn.hidden) return;
+    f.style.width=f.dataset.w+'%';
+  });
+}
+fillBars();
+
+/* 첫 생각 */
+$$('#firstStance .pill').forEach(p=>p.addEventListener('click',()=>{
+  $$('#firstStance .pill').forEach(x=>x.setAttribute('aria-pressed',x===p));
+}));
+
+/* 기상 요소 카운터 + 예시 잠금 */
+const WEATHER=['폭염','더위','무더위','열대야','기온','비','폭우','강수','장마','우천','눈','폭설','한파','추위','미세먼지','황사','태풍','바람','습도','기후'];
+function countWeather(txt){ return WEATHER.filter(w=>txt.includes(w)).length; }
+function proposalText(){
+  return [$('#pTitle').value,$('#pClaim').value,$('#pReason').value,$('#pCounter').value,$('#pClose').value].join('\n');
+}
+function refreshCounters(){
+  const r=$('#pReason').value;
+  $('#cReason').textContent = r.length+'자 · 기상 요소 '+countWeather(r)+'개 확인';
+  const all=proposalText().replace(/\s/g,'').length;
+  $('#lockCount').textContent='('+all+'자)';
+  const open=all>=100;
+  $('#samples').hidden=!open;
+  $('#sampleLock').hidden=open;
+}
+['pTitle','pClaim','pReason','pCounter','pClose'].forEach(id=>$('#'+id).addEventListener('input',refreshCounters));
+refreshCounters();
+
+/* 메모 → 근거 */
+$('#pullNotes').addEventListener('click',e=>{
+  e.preventDefault();
+  const notes=['n1','n2','n3','n4'].map(id=>$('#'+id).value.trim()).filter(Boolean);
+  const ys=['y1','y2','y3t'].map(id=>$('#'+id).value.trim()).filter(Boolean);
+  const all=[...notes,...ys];
+  if(!all.length){ toast('아직 적은 메모가 없어요. 자료 아래 칸부터 채워 보세요.'); return; }
+  const ord=['첫째','둘째','셋째','넷째','다섯째','여섯째','일곱째'];
+  $('#pReason').value=all.map((t,i)=>`${ord[i]||'또한'}, ${t}`).join('\n');
+  refreshCounters();
+  toast('메모 '+all.length+'개를 근거로 옮겼어요. 문장을 다듬어 보세요.');
+});
+
+/* 빠진 곳 확인 */
+$('#checkBtn').addEventListener('click',()=>{
+  const need=[['#pTitle','제목'],['#pClaim','나의 주장'],['#pReason','근거'],['#pCounter','반대 의견에 대한 답'],['#pClose','마무리 요청']];
+  const empty=need.filter(([s])=>!$(s).value.trim());
+  if(empty.length){ toast('아직 비어 있어요 — '+empty.map(e=>e[1]).join(', ')); $(empty[0][0]).focus(); return; }
+  const w=countWeather($('#pReason').value);
+  if(w<2){ toast('근거에 기상 요소가 '+w+'개뿐이에요. 폭염·강수·한파 같은 말을 넣어 보세요.'); return; }
+  toast('좋아요! 다섯 칸을 모두 채웠고 기상 요소도 '+w+'개 들어 있어요.');
+});
+
+/* ═══ 사진 업로드 + OCR ═══ */
+let bigImg=null, thumb=null;
+const dz=$('#dz'), file=$('#file');
+dz.addEventListener('click',()=>file.click());
+dz.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click();} });
+['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('over');}));
+dz.addEventListener('drop',e=>{ const f=e.dataTransfer.files[0]; if(f) handleFile(f); });
+file.addEventListener('change',e=>{ const f=e.target.files[0]; if(f) handleFile(f); });
+
+function resize(img,max,q){
+  const c=document.createElement('canvas');
+  const r=Math.min(1,max/Math.max(img.width,img.height));
+  c.width=Math.round(img.width*r); c.height=Math.round(img.height*r);
+  c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  return c.toDataURL('image/jpeg',q);
+}
+function handleFile(f){
+  if(!f.type.startsWith('image/')){ toast('이미지 파일만 올릴 수 있어요.'); return; }
+  const fr=new FileReader();
+  fr.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      bigImg=resize(img,1500,.82);
+      thumb=resize(img,560,.55);
+      $('#shot').src=thumb;
+      $('#shotWrap').style.display='block';
+      $('#ocrBtn').disabled=false; $('#ocrClear').disabled=false;
+      toast('사진을 올렸어요. 이제 글씨 읽기를 눌러 주세요.');
+    };
+    img.src=fr.result;
+  };
+  fr.readAsDataURL(f);
+}
+$('#ocrClear').addEventListener('click',()=>{
+  bigImg=thumb=null; file.value='';
+  $('#shotWrap').style.display='none';
+  $('#ocrBtn').disabled=true; $('#ocrClear').disabled=true;
+});
+
+async function callAI(prompt, imageB64, maxTokens){
+  const mt = maxTokens || 1200;
+  if(AI_PROVIDER === 'gemini'){
+    if(!API_KEY) throw new Error('NO_KEY');
+    const parts = [];
+    if(imageB64) parts.push({inline_data:{mime_type:'image/jpeg', data:imageB64}});
+    parts.push({text:prompt});
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/'+
+      encodeURIComponent(AI_MODEL||'gemini-3.6-flash')+':generateContent';
+    const res = await fetch(url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-goog-api-key':API_KEY},
+      body:JSON.stringify({contents:[{parts}],generationConfig:{maxOutputTokens:mt}})
+    });
+    if(!res.ok) throw new Error('Gemini '+res.status);
+    const data = await res.json();
+    const c = (data.candidates && data.candidates[0]) || {};
+    return ((c.content && c.content.parts) || []).map(p=>p.text||'').join('').trim();
+  }
+  const headers = {'Content-Type':'application/json'};
+  if(API_KEY){
+    headers['x-api-key'] = API_KEY;
+    headers['anthropic-version'] = '2023-06-01';
+    headers['anthropic-dangerous-direct-browser-access'] = 'true';
+  }
+  const content = [];
+  if(imageB64) content.push({type:'image',source:{type:'base64',media_type:'image/jpeg',data:imageB64}});
+  content.push({type:'text',text:prompt});
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST', headers,
+    body:JSON.stringify({model:AI_MODEL||'claude-sonnet-4-6', max_tokens:mt, messages:[{role:'user',content}]})
+  });
+  if(!res.ok) throw new Error('Claude '+res.status);
+  const data = await res.json();
+  return (data.content||[]).map(b=>b.type==='text'?b.text:'').join('\n').trim();
+}
+
+$('#ocrBtn').addEventListener('click',async()=>{
+  if(!bigImg) return;
+  const btn=$('#ocrBtn'), old=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>글씨 읽는 중…';
+  try{
+    const b64=bigImg.split(',')[1];
+    const out=await callAI('이 사진은 초등학교 6학년 학생이 공책에 손으로 쓴 글입니다. 글씨를 그대로 읽어 한국어 텍스트로 옮겨 주세요.\n규칙:\n1) 학생이 쓴 내용을 고치거나 다듬지 말고 원문 그대로 옮길 것(맞춤법 오류도 그대로).\n2) 줄바꿈과 문단은 사진과 비슷하게 유지할 것.\n3) 도저히 알아볼 수 없는 글자는 [?]로 표시할 것.\n4) 설명이나 인사말 없이 옮긴 본문만 출력할 것.', b64, 1500);
+    $('#ocrText').value=out;
+    toast('글씨를 읽었어요. 틀린 글자가 없는지 확인하세요.');
+  }catch(e){
+    toast(e.message==='NO_KEY'?'교사용 → 설정 탭에서 API 키를 먼저 넣어 주세요.'
+      :'읽기에 실패했어요. 사진을 더 밝게 다시 찍거나, 설정에서 키·모델 이름을 확인해 주세요. ('+e.message+')');
+  }finally{ btn.disabled=false; btn.innerHTML=old; }
+});
+
+$('#ocrToForm').addEventListener('click',()=>{
+  const t=$('#ocrText').value.trim();
+  if(!t){ toast('먼저 글씨를 읽어 오세요.'); return; }
+  const lines=t.split('\n').map(s=>s.trim()).filter(Boolean);
+  if(!$('#pClaim').value) $('#pClaim').value=lines[0]||'';
+  if(!$('#pReason').value) $('#pReason').value=lines.slice(1,-1).join('\n');
+  if(!$('#pClose').value) $('#pClose').value=lines[lines.length-1]||'';
+  refreshCounters();
+  toast('제안서 칸에 나누어 넣었어요. 칸이 맞는지 직접 옮겨 정리하세요.');
+});
+
+/* ═══ 결과 모으기 ═══ */
+function payload(){
+  const st=$$('#firstStance .pill').find(p=>p.getAttribute('aria-pressed')==='true');
+  const v=id=>$('#'+id).value.trim();
+  return {
+    code:CLASS_CODE,
+    className:v('sClass'), studentNo:v('sNo'), studentName:v('sName'),
+    stance: st?st.textContent:'', firstWhy:v('firstWhy'), wonder:v('wonder'),
+    n1:v('n1'), n2:v('n2'), n3:v('n3'), n4:v('n4'),
+    y1:v('y1'), y2:v('y2'), y3:v('y3t'),
+    pTitle:v('pTitle'), pClaim:v('pClaim'), pReason:v('pReason'),
+    pCounter:v('pCounter'), pClose:v('pClose'),
+    ocrText:v('ocrText'), photo:thumb||'',
+    wrap:[v('f1'),v('f2'),v('f3'),v('f4')].join(' / '), changed:v('changed'),
+    selfCheck:$$('.chk input:checked').length,
+    weatherWords:countWeather($('#pReason').value+' '+$('#ocrText').value),
+    score:null, feedback:'',
+    createdAt:new Date().toISOString()
+  };
+}
+function asText(d){
+  return [
+'천안에 돔구장이 왜 필요할까? — 탐구 활동지',
+`${d.className||''} ${d.studentNo||''}번 ${d.studentName||''}`,'',
+'[도입] 첫 생각','· 입장 : '+(d.stance||'-'),'· 까닭 : '+(d.firstWhy||'-'),'· 궁금한 점 : '+(d.wonder||'-'),'',
+'[전개①] 자료에서 알게 된 점',
+'· 자료1 : '+(d.n1||'-'),'· 자료2 : '+(d.n2||'-'),'· 자료3 : '+(d.n3||'-'),'· 자료4 : '+(d.n4||'-'),'',
+'[전개②] 3Y','· 나에게 : '+(d.y1||'-'),'· 우리나라에 : '+(d.y2||'-'),'· 세상 전체에 : '+(d.y3||'-'),'',
+'[전개③] 제안서','제목 : '+(d.pTitle||'-'),'① 주장 : '+(d.pClaim||'-'),'② 근거 :',(d.pReason||'-'),
+'③ 반대 의견에 대한 답 : '+(d.pCounter||'-'),'④ 마무리 요청 : '+(d.pClose||'-'),'',
+d.ocrText?('[손글씨 사진에서 읽은 글]\n'+d.ocrText+'\n'):'',
+'[정리] 탐구 결과 : '+(d.wrap||'-'),'· 생각의 변화 : '+(d.changed||'-'),
+'· 자기점검 : '+d.selfCheck+' / 4'
+  ].join('\n');
+}
+$('#dl').addEventListener('click',()=>{
+  const blob=new Blob(['\ufeff'+asText(payload())],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='dome-worksheet.txt'; a.click();
+  URL.revokeObjectURL(a.href); toast('내려받았어요.');
+});
+$('#cp').addEventListener('click',async()=>{
+  try{ await navigator.clipboard.writeText(asText(payload())); toast('전체 내용을 복사했어요.'); }
+  catch(e){ toast('복사가 막혔어요. 내려받기를 사용해 주세요.'); }
+});
+
+/* ═══ Firebase ═══ */
+let db=null, fs=null, localStore=[];
+const hasCfg = !!FIREBASE_CONFIG.projectId;
+async function initFB(){
+  if(!hasCfg){ setState(false,'연습 모드 — 제출 내용은 이 기기에서만 보입니다.'); return; }
+  try{
+    const {initializeApp}=await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js');
+    fs=await import('https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js');
+    db=fs.getFirestore(initializeApp(FIREBASE_CONFIG));
+    setState(true,'선생님 화면과 연결됨 · 학급 코드 '+CLASS_CODE);
+  }catch(e){
+    db=null; setState(false,'연결 실패 — 연습 모드로 동작합니다.');
+  }
+}
+function setState(on,msg){
+  $('#netState').innerHTML='<span class="dot'+(on?' on':'')+'"></span>'+msg;
+}
+initFB();
+
+$('#submitBtn').addEventListener('click',async()=>{
+  const d=payload();
+  if(!d.studentName||!d.studentNo){ toast('번호와 이름을 적어 주세요.'); return; }
+  if(!d.pReason && !d.ocrText){ toast('제안서 근거가 비어 있어요.'); return; }
+  const btn=$('#submitBtn'); btn.disabled=true; btn.innerHTML='<span class="spin"></span>제출 중…';
+  try{
+    if(db){ await fs.addDoc(fs.collection(db,COLLECTION),d); }
+    else{ localStore.push({id:'local'+localStore.length,...d}); }
+    toast('제출했어요. 수고했습니다! 👏');
+    btn.innerHTML='제출 완료 ✓';
+  }catch(e){
+    toast('제출에 실패했어요. 활동지를 내려받아 선생님께 보여 주세요.');
+    btn.disabled=false; btn.innerHTML='제출하기';
+  }
+});
+
+/* ═══ 교사 대시보드 ═══ */
+let rows=[], sel=null;
+$('#tOpen').addEventListener('click',()=>{ $('#tPanel').hidden=false; load(); });
+$('#tClose').addEventListener('click',()=>$('#tPanel').hidden=true);
+$('#reload').addEventListener('click',load);
+$$('.otab').forEach(t=>t.addEventListener('click',()=>{
+  $$('.otab').forEach(x=>x.setAttribute('aria-selected',x===t));
+  $$('[data-opanel]').forEach(p=>p.hidden=(p.dataset.opanel!==t.dataset.ot));
+}));
+$('#aiProvider').addEventListener('change',e=>{
+  $('#aiModel').value = e.target.value==='gemini' ? 'gemini-3.6-flash' : 'claude-sonnet-4-6';
+});
+$('#saveKey').addEventListener('click',()=>{
+  AI_PROVIDER=$('#aiProvider').value;
+  AI_MODEL=$('#aiModel').value.trim();
+  API_KEY=$('#apiKey').value.trim();
+  toast(API_KEY?(AI_PROVIDER==='gemini'?'Gemini':'Claude')+' 설정을 적용했어요 (이 세션에만 유지).':'키를 비웠어요.');
+});
+
+async function load(){
+  if(db){
+    try{
+      const q=fs.query(fs.collection(db,COLLECTION),fs.where('code','==',CLASS_CODE));
+      const snap=await fs.getDocs(q);
+      rows=snap.docs.map(d=>({id:d.id,...d.data()}));
+    }catch(e){ toast('불러오기 실패 — Firestore 규칙을 확인하세요.'); rows=[]; }
+  }else{ rows=[...localStore]; }
+  rows.sort((a,b)=>(a.studentNo||'').localeCompare(b.studentNo||'',undefined,{numeric:true}));
+  renderList();
+}
+function renderList(){
+  const g=rows.filter(r=>r.score!=null).length;
+  const tot=rows.filter(r=>r.score!=null).reduce((s,r)=>s+(r.score||0),0);
+  $('#kTotal').textContent=rows.length;
+  $('#kGraded').textContent=g;
+  $('#kAvg').textContent=g?(tot/g).toFixed(1):'–';
+  $('#kOcr').textContent=rows.filter(r=>r.photo).length;
+  const el=$('#slist');
+  if(!rows.length){ el.innerHTML='<div style="padding:16px;font-size:14px;color:var(--ink-60)">아직 제출이 없습니다.</div>'; $('#detail').innerHTML='<p style="color:var(--ink-60);font-size:14px">왼쪽에서 학생을 선택하세요.</p>'; return; }
+  el.innerHTML='';
+  rows.forEach(r=>{
+    const d=document.createElement('div');
+    d.className='sitem'; d.setAttribute('aria-current',sel===r.id);
+    const sc=(r.score!=null)?`<span class="sc">${r.score}점</span>`:'';
+    d.innerHTML=`${sc}<b>${esc(r.studentNo||'')} ${esc(r.studentName||'')}</b>
+      <small>${esc(r.className||'')} · ${r.photo?'📷 손글씨 · ':''}자기점검 ${r.selfCheck||0}/4</small>`;
+    d.addEventListener('click',()=>{sel=r.id;renderList();renderDetail(r);});
+    el.appendChild(d);
+  });
+}
+function esc(s){ return String(s).replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c])); }
+function renderDetail(r){
+  $('#detail').innerHTML=`
+    <h4>${esc(r.studentNo||'')} ${esc(r.studentName||'')} <span style="font-size:12px;color:var(--ink-60);font-family:var(--mono)">${esc((r.createdAt||'').slice(0,16).replace('T',' '))}</span></h4>
+    <h4>제안서</h4>
+    <div class="qt"><b>${esc(r.pTitle||'(제목 없음)')}</b>
+
+① 주장 · ${esc(r.pClaim||'-')}
+
+② 근거 · ${esc(r.pReason||'-')}
+
+③ 반대 의견에 대한 답 · ${esc(r.pCounter||'-')}
+
+④ 마무리 · ${esc(r.pClose||'-')}</div>
+    ${r.ocrText?`<h4>손글씨에서 읽은 글</h4><div class="qt">${esc(r.ocrText)}</div>`:''}
+    ${r.photo?`<h4>제출 사진</h4><img src="${r.photo}" style="max-width:100%;border-radius:10px;border:1px solid var(--line)">`:''}
+    <h4>3Y</h4><div class="qt">나 · ${esc(r.y1||'-')}
+우리나라 · ${esc(r.y2||'-')}
+세상 · ${esc(r.y3||'-')}</div>
+    <h4>정리</h4><div class="qt">${esc(r.wrap||'-')}
+생각의 변화 · ${esc(r.changed||'-')}</div>
+    <h4>채점 <span style="font-size:12px;color:var(--ink-60)">5점 만점</span></h4>
+    <div class="scorebox">
+      <div class="f" style="grid-column:1/-1"><label>날씨가 생활에 미치는 영향을 판단하기</label>
+        <select id="g1"><option value="">선택</option>
+          <option value="5">5점 (A) · 이유 2가지 이상 + 구체적·타당한 근거</option>
+          <option value="3">3점 (B) · 이유 1가지 + 근거</option>
+          <option value="1">1점 (C) · 의견은 있으나 근거 부족·연결 미흡</option></select></div>
+    </div>
+    <label class="q" for="gfb">피드백</label>
+    <textarea id="gfb" rows="3" placeholder="학생에게 줄 한두 문장"></textarea>
+    <div class="actions">
+      <button class="btn warm" id="aiGrade">AI 채점 도우미</button>
+      <button class="btn primary" id="saveGrade">채점 저장</button>
+    </div>
+    <p class="hint" style="margin-top:10px">AI 채점은 <b>참고용 제안</b>입니다. 최종 점수는 선생님이 확인하고 저장하세요.</p>`;
+  if(r.score!=null) $('#g1').value=String(r.score);
+  $('#gfb').value=r.feedback||'';
+  $('#saveGrade').addEventListener('click',()=>saveGrade(r));
+  $('#aiGrade').addEventListener('click',()=>aiGrade(r));
+}
+async function saveGrade(r){
+  const s=parseInt($('#g1').value)||null;
+  const fb=$('#gfb').value.trim();
+  r.score=s; r.feedback=fb;
+  try{
+    if(db) await fs.updateDoc(fs.doc(db,COLLECTION,r.id),{score:s,feedback:fb});
+    toast('저장했어요.'); renderList();
+  }catch(e){ toast('저장 실패 — 규칙을 확인하세요.'); }
+}
+async function aiGrade(r){
+  const btn=$('#aiGrade'), old=btn.innerHTML;
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span>채점 중…';
+  const answer=[r.pTitle,r.pClaim,r.pReason,r.pCounter,r.pClose,r.ocrText].filter(Boolean).join('\n');
+  const prompt=`초등학교 6학년 학생의 논술형 답안을 아래 채점 기준으로 평가하세요.
+
+[수행과제] 학생은 '천안시 어린이 시민참여단'이 되어, 천안시장과 천안시민에게 보내는 돔구장 건립 제안서를 씁니다. 천안시는 일반 야구장과 돔구장에 대한 시민 의견을 듣고 있는 상황입니다.
+
+[문항] 천안에 돔구장이 왜 필요한지, 날씨가 생활에 미치는 영향과 관련지어 제안서를 쓰시오.
+
+[채점 요소] 날씨가 생활에 미치는 영향을 판단하기
+5점(A): 날씨가 생활과 야외 활동에 미치는 영향을 바탕으로 천안에 돔구장이 필요한 이유를 2가지 이상의 구체적이고 타당한 근거를 들어 논리적으로 설명함.
+3점(B): 날씨가 생활과 야외 활동에 미치는 영향을 바탕으로 천안에 돔구장이 필요한 이유 1가지를 근거를 들어 설명함.
+1점(C): 돔구장이 필요하다는 의견은 나타냈으나 날씨가 생활에 미치는 영향과 관련된 근거가 부족하거나 설명의 연결이 미흡함.
+
+[채점 요령] ① 돔구장이 필요한 이유가 몇 가지 제시되었는지 세세요(2가지 이상이면 5점, 1가지면 3점). ② 각 이유가 날씨가 생활·야외 활동에 미치는 영향에서 출발하는지 보세요. ③ 이유는 있으나 날씨와의 연결이 끊기거나 근거가 없으면 개수와 상관없이 1점입니다.
+
+[학생 답안]
+${answer}
+
+맞춤법 오류나 글씨체는 채점하지 말고 내용만 보세요. 초등학생 수준을 감안해 관대하되 기준은 지키세요.
+다음 JSON만 출력하세요. 다른 말, 마크다운 표시 없이:
+{"s":5,"r":"척도 판단 근거 한 문장","feedback":"학생에게 줄 격려와 보완점 두 문장"}`;
+  try{
+    let out=await callAI(prompt, null, 800);
+    out=out.replace(/```json|```/g,'').trim();
+    const j=JSON.parse(out);
+    $('#g1').value=String(j.s);
+    $('#gfb').value=j.feedback||'';
+    toast('AI 제안 — '+j.s+'점 : '+j.r);
+  }catch(e){
+    toast(e.message==='NO_KEY'?'설정 탭에서 API 키를 먼저 넣어 주세요.'
+      :'AI 채점 실패 — 키와 모델 이름을 확인해 주세요. ('+e.message+')');
+  }finally{ btn.disabled=false; btn.innerHTML=old; }
+}
+$('#csv').addEventListener('click',()=>{
+  if(!rows.length){ toast('내보낼 제출이 없습니다.'); return; }
+  const head=['반','번호','이름','점수(5점만점)','척도','기상어수','자기점검','제목','주장','근거','반대의견답','마무리','손글씨','피드백'];
+  const q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
+  const lv=s=>s==5?'A':s==3?'B':s==1?'C':'';
+  const body=rows.map(r=>[r.className,r.studentNo,r.studentName,r.score,lv(r.score),
+    r.weatherWords,r.selfCheck,
+    r.pTitle,r.pClaim,r.pReason,r.pCounter,r.pClose,r.ocrText,r.feedback].map(q).join(','));
+  const blob=new Blob(['\ufeff'+[head.map(q).join(','),...body].join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='dome-submissions.csv'; a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* 토스트 */
+let tid;
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(tid); tid=setTimeout(()=>t.classList.remove('on'),3800);
+}
+})();
+</script>
